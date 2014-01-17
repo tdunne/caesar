@@ -25,7 +25,7 @@ def nslogin(caesar, input):
 	'''log in to NickServ'''
 	# Must be done through privmsg with admin
 	password = caesar.config.nickservpass
-	if password = 'password':
+	if password == 'password':
 		phenny.reply("Edit the default config first")
 	if input.sender.startswith('#'): return # must be done through privmsg
 	if input.admin:
