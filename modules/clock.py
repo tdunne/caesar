@@ -247,38 +247,38 @@ f_time.commands = ['t']
 f_time.name = 't'
 f_time.example = '.t UTC'
 
-def beats(phenny, input): 
+def beats(caesar, input): 
    """Shows the internet time in Swatch beats."""
    beats = ((time.time() + 3600) % 86400) / 86.4
    beats = int(math.floor(beats))
-   phenny.say('@%03i' % beats)
+   caesar.say('@%03i' % beats)
 beats.commands = ['beats']
 beats.priority = 'low'
 
 def divide(input, by): 
    return (input / by), (input % by)
 
-def yi(phenny, input): 
+def yi(caesar, input): 
    """Shows whether it is currently yi or not."""
    quadraels, remainder = divide(int(time.time()), 1753200)
    raels = quadraels * 4
    extraraels, remainder = divide(remainder, 432000)
    if extraraels == 4: 
-      return phenny.say('Yes! PARTAI!')
-   else: phenny.say('Not yet...')
+      return caesar.say('Yes! PARTAI!')
+   else: caesar.say('Not yet...')
 yi.commands = ['yi']
 yi.priority = 'low'
 
-def tock(phenny, input): 
+def tock(caesar, input): 
    """Shows the time from the USNO's atomic clock."""
    u = urllib.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
    info = u.info()
    u.close()
-   phenny.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
+   caesar.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
 tock.commands = ['tock']
 tock.priority = 'high'
 
-def npl(phenny, input): 
+def npl(caesar, input): 
    """Shows the time from NPL's SNTP server."""
    # for server in ('ntp1.npl.co.uk', 'ntp2.npl.co.uk'): 
    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -293,8 +293,8 @@ def npl(phenny, input):
       a, b = str(d).split('.')
       f = '%Y-%m-%d %H:%M:%S'
       result = datetime.datetime.fromtimestamp(d).strftime(f) + '.' + b[:6]
-      phenny.say(result + ' - ntp1.npl.co.uk')
-   else: phenny.say('No data received, sorry')
+      caesar.say(result + ' - ntp1.npl.co.uk')
+   else: caesar.say('No data received, sorry')
 npl.commands = ['npl']
 npl.priority = 'high'
 

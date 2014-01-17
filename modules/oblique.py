@@ -28,7 +28,7 @@ def mappings(uri):
       result[command] = template.replace('&amp;', '&')
    return result
 
-def service(phenny, input, command, args): 
+def service(caesar, input, command, args): 
    t = o.services[command]
    template = t.replace('${args}', urllib.quote(args.encode('utf-8'), ''))
    template = template.replace('${nick}', urllib.quote(input.nick, ''))
@@ -38,18 +38,18 @@ def service(phenny, input, command, args):
    if isinstance(info, list): 
       info = info[0]
    if not 'text/plain' in info.get('content-type', '').lower(): 
-      return phenny.reply("Sorry, the service didn't respond in plain text.")
+      return caesar.reply("Sorry, the service didn't respond in plain text.")
    bytes = web.get(uri)
    lines = bytes.splitlines()
    if not lines: 
-      return phenny.reply("Sorry, the service didn't respond any output.")
+      return caesar.reply("Sorry, the service didn't respond any output.")
    try: line = lines[0].encode('utf-8')[:350]
    except: line = lines[0][:250]
-   phenny.say(line)
+   caesar.say(line)
 
-def refresh(phenny): 
-   if hasattr(phenny.config, 'services'): 
-      services = phenny.config.services
+def refresh(caesar): 
+   if hasattr(caesar.config, 'services'): 
+      services = caesar.config.services
    else: services = definitions
 
    old = o.services
@@ -57,21 +57,21 @@ def refresh(phenny):
    o.services = mappings(o.serviceURI)
    return len(o.services), set(o.services) - set(old)
 
-def o(phenny, input): 
+def o(caesar, input): 
    """Call a webservice."""
    text = input.group(2)
 
    if (not o.services) or (text == 'refresh'): 
-      length, added = refresh(phenny)
+      length, added = refresh(caesar)
       if text == 'refresh': 
          msg = 'Okay, found %s services.' % length
          if added: 
             msg += ' Added: ' + ', '.join(sorted(added)[:5])
             if len(added) > 5: msg += ', &c.'
-         return phenny.reply(msg)
+         return caesar.reply(msg)
 
    if not text: 
-      return phenny.reply('Try %s for details.' % o.serviceURI)
+      return caesar.reply('Try %s for details.' % o.serviceURI)
 
    if ' ' in text: 
       command, args = text.split(' ', 1)
@@ -80,29 +80,29 @@ def o(phenny, input):
 
    if command == 'service': 
       msg = o.services.get(args, 'No such service!')
-      return phenny.reply(msg)
+      return caesar.reply(msg)
 
    if not o.services.has_key(command): 
-      return phenny.reply('Service not found in %s' % o.serviceURI)
+      return caesar.reply('Service not found in %s' % o.serviceURI)
 
-   if hasattr(phenny.config, 'external'): 
-      default = phenny.config.external.get('*')
-      manifest = phenny.config.external.get(input.sender, default)
+   if hasattr(caesar.config, 'external'): 
+      default = caesar.config.external.get('*')
+      manifest = caesar.config.external.get(input.sender, default)
       if manifest: 
          commands = set(manifest)
          if (command not in commands) and (manifest[0] != '!'): 
-            return phenny.reply('Sorry, %s is not whitelisted' % command)
+            return caesar.reply('Sorry, %s is not whitelisted' % command)
          elif (command in commands) and (manifest[0] == '!'): 
-            return phenny.reply('Sorry, %s is blacklisted' % command)
-   service(phenny, input, command, args)
+            return caesar.reply('Sorry, %s is blacklisted' % command)
+   service(caesar, input, command, args)
 o.commands = ['o']
 o.example = '.o servicename arg1 arg2 arg3'
 o.services = {}
 o.serviceURI = None
 
-def snippet(phenny, input): 
+def snippet(caesar, input): 
    if not o.services: 
-      refresh(phenny)
+      refresh(caesar)
 
    search = urllib.quote(input.group(2).encode('utf-8'))
    py = "BeautifulSoup.BeautifulSoup(re.sub('<.*?>|(?<= ) +', '', " + \
@@ -112,7 +112,7 @@ def snippet(phenny, input):
         ".replace('null', 'None'))['responseData']['resul" + \
         "ts'][0]['content'].decode('unicode-escape')).replace(" + \
         "'&quot;', '\x22')), convertEntities=True)"
-   service(phenny, input, 'py', py)
+   service(caesar, input, 'py', py)
 snippet.commands = ['snippet']
 
 if __name__ == '__main__': 

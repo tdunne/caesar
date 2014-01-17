@@ -21,7 +21,7 @@ r_whitespace = re.compile(r'[\t\r\n ]+')
 
 class Grab(urllib.URLopener): 
    def __init__(self, *args): 
-      self.version = 'Mozilla/5.0 (Phenny)'
+      self.version = 'Mozilla/5.0 (caesar)'
       urllib.URLopener.__init__(self, *args)
    def http_error_default(self, url, fp, errcode, errmsg, headers): 
       return urllib.addinfourl(fp, [headers, errcode], "http:" + url)

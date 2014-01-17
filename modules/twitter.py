@@ -67,24 +67,24 @@ def id_tweet(tid):
       return format(tweet, username)
    return "Sorry, couldn't get a tweet from %s" % link
 
-def twitter(phenny, input):
+def twitter(caesar, input):
    arg = input.group(2)
    if not arg:
-      return phenny.reply("Give me a link, a username, or a tweet id")
+      return caesar.reply("Give me a link, a username, or a tweet id")
 
    arg = arg.strip()
    if isinstance(arg, unicode):
       arg = arg.encode('utf-8')
 
    if arg.isdigit():
-      phenny.say(id_tweet(arg))
+      caesar.say(id_tweet(arg))
    elif r_username.match(arg):
-      phenny.say(user_tweet(arg))
+      caesar.say(user_tweet(arg))
    elif r_link.match(arg):
       username = arg.split('/')[3]
       tweet = read_tweet(arg)
-      phenny.say(format(tweet, username))
-   else: phenny.reply("Give me a link, a username, or a tweet id")
+      caesar.say(format(tweet, username))
+   else: caesar.reply("Give me a link, a username, or a tweet id")
 
 twitter.commands = ['tw', 'twitter']
 twitter.thread = True

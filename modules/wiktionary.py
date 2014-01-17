@@ -71,13 +71,13 @@ def format(word, definitions, number=2):
          result += ', '.join(n)
    return result.strip(' .,')
 
-def w(phenny, input): 
+def w(caesar, input): 
    if not input.group(2):
-      return phenny.reply("Nothing to define.")
+      return caesar.reply("Nothing to define.")
    word = input.group(2)
    etymology, definitions = wiktionary(word)
    if not definitions: 
-      phenny.say("Couldn't get any definitions for %s." % word)
+      caesar.say("Couldn't get any definitions for %s." % word)
       return
 
    result = format(word, definitions)
@@ -88,12 +88,12 @@ def w(phenny, input):
 
    if len(result) > 300: 
       result = result[:295] + '[...]'
-   phenny.say(result)
+   caesar.say(result)
 w.commands = ['w']
 w.example = '.w bailiwick'
 
-def encarta(phenny, input): 
-   return phenny.reply('Microsoft removed Encarta, try .w instead!')
+def encarta(caesar, input): 
+   return caesar.reply('Microsoft removed Encarta, try .w instead!')
 encarta.commands = ['dict']
 
 if __name__ == '__main__': 

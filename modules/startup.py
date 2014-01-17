@@ -9,57 +9,57 @@ http://inamidst.com/phenny/
 
 import threading, time
 
-def setup(phenny): 
-   print("Setting up phenny")
+def setup(caesar): 
+   print("Setting up caesar")
    # by clsn
-   phenny.data = {}
+   caesar.data = {}
    refresh_delay = 300.0
 
-   if hasattr(phenny.config, 'refresh_delay'):
-      try: refresh_delay = float(phenny.config.refresh_delay)
+   if hasattr(caesar.config, 'refresh_delay'):
+      try: refresh_delay = float(caesar.config.refresh_delay)
       except: pass
 
       def close():
          print "Nobody PONGed our PING, restarting"
-         phenny.handle_close()
+         caesar.handle_close()
       
       def pingloop():
          timer = threading.Timer(refresh_delay, close, ())
-         phenny.data['startup.setup.timer'] = timer
-         phenny.data['startup.setup.timer'].start()
+         caesar.data['startup.setup.timer'] = timer
+         caesar.data['startup.setup.timer'].start()
          # print "PING!"
-         phenny.write(('PING', phenny.config.host))
-      phenny.data['startup.setup.pingloop'] = pingloop
+         caesar.write(('PING', caesar.config.host))
+      caesar.data['startup.setup.pingloop'] = pingloop
 
-      def pong(phenny, input):
+      def pong(caesar, input):
          try:
             # print "PONG!"
-            phenny.data['startup.setup.timer'].cancel()
+            caesar.data['startup.setup.timer'].cancel()
             time.sleep(refresh_delay + 60.0)
             pingloop()
          except: pass
       pong.event = 'PONG'
       pong.thread = True
       pong.rule = r'.*'
-      phenny.variables['pong'] = pong
+      caesar.variables['pong'] = pong
 
-def startup(phenny, input): 
+def startup(caesar, input): 
    import time
 
    # Start the ping loop. Has to be done after USER on e.g. quakenet
-   if phenny.data.get('startup.setup.pingloop'):
-      phenny.data['startup.setup.pingloop']()
+   if caesar.data.get('startup.setup.pingloop'):
+      caesar.data['startup.setup.pingloop']()
 
-   if hasattr(phenny.config, 'serverpass'): 
-      phenny.write(('PASS', phenny.config.serverpass))
+   if hasattr(caesar.config, 'serverpass'): 
+      caesar.write(('PASS', caesar.config.serverpass))
 
-   if hasattr(phenny.config, 'password'): 
-      phenny.msg('NickServ', 'IDENTIFY %s' % phenny.config.password)
+   if hasattr(caesar.config, 'password'): 
+      caesar.msg('NickServ', 'IDENTIFY %s' % caesar.config.password)
       time.sleep(5)
 
    # Cf. http://swhack.com/logs/2005-12-05#T19-32-36
-   for channel in phenny.channels: 
-      phenny.write(('JOIN', channel))
+   for channel in caesar.channels: 
+      caesar.write(('JOIN', channel))
       time.sleep(0.5)
 startup.rule = r'(.*)'
 startup.event = '251'

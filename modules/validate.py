@@ -9,10 +9,10 @@ http://inamidst.com/phenny/
 
 import web
 
-def val(phenny, input): 
+def val(caesar, input): 
    """Check a webpage using the W3C Markup Validator."""
    if not input.group(2):
-      return phenny.reply("Nothing to validate.")
+      return caesar.reply("Nothing to validate.")
    uri = input.group(2)
    if not uri.startswith('http://'): 
       uri = 'http://' + uri
@@ -23,7 +23,7 @@ def val(phenny, input):
    result = uri + ' is '
 
    if isinstance(info, list): 
-      return phenny.say('Got HTTP response %s' % info[1])
+      return caesar.say('Got HTTP response %s' % info[1])
 
    if info.has_key('X-W3C-Validator-Status'): 
       result += str(info['X-W3C-Validator-Status'])
@@ -35,7 +35,7 @@ def val(phenny, input):
             else: result += ' (%s error)' % n
    else: result += 'Unvalidatable: no X-W3C-Validator-Status'
 
-   phenny.reply(result)
+   caesar.reply(result)
 val.rule = (['val'], r'(?i)(\S+)')
 val.example = '.val http://www.w3.org/'
 

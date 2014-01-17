@@ -10,23 +10,23 @@ http://inamidst.com/phenny/
 import time
 from tools import deprecated
 
-def seen(phenny, input): 
+def seen(caesar, input): 
    """.seen <nick> - Reports when <nick> was last seen."""
    nick = input.group(2)
    if not nick:
-      return phenny.reply("Need a nickname to search for...")
+      return caesar.reply("Need a nickname to search for...")
    nick = nick.lower()
 
-   if not hasattr(phenny, 'seen'): 
-      return phenny.reply("?")
+   if not hasattr(caesar, 'seen'): 
+      return caesar.reply("?")
 
-   if phenny.seen.has_key(nick): 
-      channel, t = phenny.seen[nick]
+   if caesar.seen.has_key(nick): 
+      channel, t = caesar.seen[nick]
       t = time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime(t))
 
       msg = "I last saw %s at %s on %s" % (nick, t, channel)
-      phenny.reply(msg)
-   else: phenny.reply("Sorry, I haven't seen %s around." % nick)
+      caesar.reply(msg)
+   else: caesar.reply("Sorry, I haven't seen %s around." % nick)
 seen.rule = (['seen'], r'(\S+)')
 
 @deprecated

@@ -44,14 +44,14 @@ def translate(text, input='auto', output='en'):
 
    return ''.join(x[0] for x in data[0]), language
 
-def tr(phenny, context): 
+def tr(caesar, context): 
    """Translates a phrase, with an optional language hint."""
    input, output, phrase = context.groups()
 
    phrase = phrase.encode('utf-8')
 
    if (len(phrase) > 350) and (not context.admin): 
-      return phenny.reply('Phrase must be under 350 characters.')
+      return caesar.reply('Phrase must be under 350 characters.')
 
    input = input or 'auto'
    input = input.encode('utf-8')
@@ -66,18 +66,18 @@ def tr(phenny, context):
          msg = '"%s" (%s to %s, translate.google.com)' % (msg, input, output)
       else: msg = 'The %s to %s translation failed, sorry!' % (input, output)
 
-      phenny.reply(msg)
-   else: phenny.reply('Language guessing failed, so try suggesting one!')
+      caesar.reply(msg)
+   else: caesar.reply('Language guessing failed, so try suggesting one!')
 
 tr.rule = ('$nick', ur'(?:([a-z]{2}) +)?(?:([a-z]{2}|en-raw) +)?["“](.+?)["”]\? *$')
 tr.example = '$nickname: "mon chien"? or $nickname: fr "mon chien"?'
 tr.priority = 'low'
 
-def tr2(phenny, input): 
+def tr2(caesar, input): 
    """Translates a phrase, with an optional language hint."""
    command = input.group(2)
    if not command:
-      return phenny.reply("Need something to translate!")
+      return caesar.reply("Need something to translate!")
    command = command.encode('utf-8')
 
    def langcode(p): 
@@ -94,7 +94,7 @@ def tr2(phenny, input):
    phrase = command
 
    # if (len(phrase) > 350) and (not input.admin): 
-   #    return phenny.reply('Phrase must be under 350 characters.')
+   #    return caesar.reply('Phrase must be under 350 characters.')
 
    src, dest = args
    if src != dest: 
@@ -107,13 +107,13 @@ def tr2(phenny, input):
          msg = '"%s" (%s to %s, translate.google.com)' % (msg, src, dest)
       else: msg = 'The %s to %s translation failed, sorry!' % (src, dest)
 
-      phenny.reply(msg)
-   else: phenny.reply('Language guessing failed, so try suggesting one!')
+      caesar.reply(msg)
+   else: caesar.reply('Language guessing failed, so try suggesting one!')
 
 tr2.commands = ['tr']
 tr2.priority = 'low'
 
-def mangle(phenny, input): 
+def mangle(caesar, input): 
    import time
 
    phrase = input.group(2).encode('utf-8')
@@ -138,7 +138,7 @@ def mangle(phenny, input):
 
    phrase = phrase.replace(' ,', ',').replace(' .', '.')
    phrase = phrase.strip(' ,')
-   phenny.reply(phrase or 'ERRORS SRY')
+   caesar.reply(phrase or 'ERRORS SRY')
 mangle.commands = ['mangle']
 
 if __name__ == '__main__': 

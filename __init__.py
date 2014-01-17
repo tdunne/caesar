@@ -4,7 +4,7 @@ __init__.py - Phenny Init Module
 Copyright 2008, Sean B. Palmer, inamidst.com
 Licensed under the Eiffel Forum License 2.
 
-http://inamidst.com/phenny/
+http://inamidst.com/phenny
 """
 
 import sys, os, time, threading, signal
@@ -27,13 +27,13 @@ class Watcher(object):
       try: os.kill(self.child, signal.SIGKILL)
       except OSError: pass
 
-def run_phenny(config): 
+def run_caesar(config): 
    if hasattr(config, 'delay'): 
       delay = config.delay
    else: delay = 20
 
    def connect(config): 
-      p = bot.Phenny(config)
+      p = bot.caesar(config)
       p.run(config.host, config.port)
 
    try: Watcher()
@@ -53,7 +53,7 @@ def run_phenny(config):
       time.sleep(delay)
 
 def run(config): 
-   t = threading.Thread(target=run_phenny, args=(config,))
+   t = threading.Thread(target=run_caesar, args=(config,))
    if hasattr(t, 'run'): 
       t.run()
    else: t.start()

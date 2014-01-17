@@ -149,10 +149,10 @@ def wikipedia(term, language='en', last=False):
    term = term.decode('utf-8').encode('utf-8')
    return sentence + ' - ' + (wikiuri % (language, term))
 
-def wik(phenny, input): 
+def wik(caesar, input): 
    origterm = input.groups()[1]
    if not origterm: 
-      return phenny.say('Perhaps you meant ".wik Zen"?')
+      return caesar.say('Perhaps you meant ".wik Zen"?')
    origterm = origterm.encode('utf-8')
 
    term = urllib.unquote(origterm)
@@ -169,11 +169,11 @@ def wik(phenny, input):
    except IOError: 
       args = (language, wikiuri % (language, term))
       error = "Can't connect to %s.wikipedia.org (%s)" % args
-      return phenny.say(error)
+      return caesar.say(error)
 
    if result is not None: 
-      phenny.say(result)
-   else: phenny.say('Can\'t find anything in Wikipedia for "%s".' % origterm)
+      caesar.say(result)
+   else: caesar.say('Can\'t find anything in Wikipedia for "%s".' % origterm)
 
 wik.commands = ['wik']
 wik.priority = 'high'

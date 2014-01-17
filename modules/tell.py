@@ -48,7 +48,7 @@ def dumpReminders(fn, data):
 
 def setup(self): 
    fn = self.nick + '-' + self.config.host + '.tell.db'
-   self.tell_filename = os.path.join(os.path.expanduser('~/.phenny'), fn)
+   self.tell_filename = os.path.join(os.path.expanduser('~/.caesar'), fn)
    if not os.path.exists(self.tell_filename): 
       try: f = open(self.tell_filename, 'w')
       except OSError: pass
@@ -57,7 +57,7 @@ def setup(self):
          f.close()
    self.reminders = loadReminders(self.tell_filename) # @@ tell
 
-def f_remind(phenny, input): 
+def f_remind(caesar, input): 
    teller = input.nick
 
    # @@ Multiple comma-separated tellees? Cf. Terje, #swhack, 2006-04-15
@@ -69,22 +69,22 @@ def f_remind(phenny, input):
    tellee_original = tellee.rstrip('.,:;')
    tellee = tellee_original.lower()
 
-   if not os.path.exists(phenny.tell_filename): 
+   if not os.path.exists(caesar.tell_filename): 
       return
 
    if len(tellee) > 20: 
-      return phenny.reply('That nickname is too long.')
+      return caesar.reply('That nickname is too long.')
 
    timenow = time.strftime('%d %b %H:%MZ', time.gmtime())
-   if not tellee in (teller.lower(), phenny.nick, 'me'): # @@
+   if not tellee in (teller.lower(), caesar.nick, 'me'): # @@
       # @@ <deltab> and year, if necessary
       warn = False
-      if not phenny.reminders.has_key(tellee): 
-         phenny.reminders[tellee] = [(teller, verb, timenow, msg)]
+      if not caesar.reminders.has_key(tellee): 
+         caesar.reminders[tellee] = [(teller, verb, timenow, msg)]
       else: 
-         # if len(phenny.reminders[tellee]) >= maximum: 
+         # if len(caesar.reminders[tellee]) >= maximum: 
          #    warn = True
-         phenny.reminders[tellee].append((teller, verb, timenow, msg))
+         caesar.reminders[tellee].append((teller, verb, timenow, msg))
       # @@ Stephanie's augmentation
       response = "I'll pass that on when %s is around." % tellee_original
       # if warn: response += (" I'll have to use a pastebin, though, so " + 
@@ -94,63 +94,63 @@ def f_remind(phenny, input):
       if rand > 0.9999: response = "yeah, yeah"
       elif rand > 0.999: response = "yeah, sure, whatever"
 
-      phenny.reply(response)
+      caesar.reply(response)
    elif teller.lower() == tellee: 
-      phenny.say('You can %s yourself that.' % verb)
-   else: phenny.say("Hey, I'm not as stupid as Monty you know!")
+      caesar.say('You can %s yourself that.' % verb)
+   else: caesar.say("Hey, I'm not as stupid as Monty you know!")
 
-   dumpReminders(phenny.tell_filename, phenny.reminders) # @@ tell
+   dumpReminders(caesar.tell_filename, caesar.reminders) # @@ tell
 f_remind.rule = ('$nick', ['tell', 'ask'], r'(\S+) (.*)')
 
-def getReminders(phenny, channel, key, tellee): 
+def getReminders(caesar, channel, key, tellee): 
    lines = []
    template = "%s: %s <%s> %s %s %s"
    today = time.strftime('%d %b', time.gmtime())
 
-   for (teller, verb, datetime, msg) in phenny.reminders[key]: 
+   for (teller, verb, datetime, msg) in caesar.reminders[key]: 
       if datetime.startswith(today): 
          datetime = datetime[len(today)+1:]
       lines.append(template % (tellee, datetime, teller, verb, tellee, msg))
 
-   try: del phenny.reminders[key]
-   except KeyError: phenny.msg(channel, 'Er...')
+   try: del caesar.reminders[key]
+   except KeyError: caesar.msg(channel, 'Er...')
    return lines
 
-def message(phenny, input): 
+def message(caesar, input): 
    if not input.sender.startswith('#'): return
 
    tellee = input.nick
    channel = input.sender
 
    if not os: return
-   if not os.path.exists(phenny.tell_filename): 
+   if not os.path.exists(caesar.tell_filename): 
       return
 
    reminders = []
-   remkeys = list(reversed(sorted(phenny.reminders.keys())))
+   remkeys = list(reversed(sorted(caesar.reminders.keys())))
    for remkey in remkeys: 
       if not remkey.endswith('*') or remkey.endswith(':'): 
          if tellee.lower() == remkey: 
-            phenny.sending.acquire()
-            reminders.extend(getReminders(phenny, channel, remkey, tellee))
-            phenny.sending.release()
+            caesar.sending.acquire()
+            reminders.extend(getReminders(caesar, channel, remkey, tellee))
+            caesar.sending.release()
       elif tellee.lower().strip("0123456789_-[]`") == remkey.rstrip('*:'): 
-         phenny.sending.acquire()
-         reminders.extend(getReminders(phenny, channel, remkey, tellee))
-         phenny.sending.release()
+         caesar.sending.acquire()
+         reminders.extend(getReminders(caesar, channel, remkey, tellee))
+         caesar.sending.release()
 
    for line in reminders[:maximum]: 
-      phenny.say(line)
+      caesar.say(line)
 
    if reminders[maximum:]: 
-      phenny.say('Further messages sent privately')
+      caesar.say('Further messages sent privately')
       for line in reminders[maximum:]: 
-         phenny.msg(tellee, line)
+         caesar.msg(tellee, line)
 
-   if len(phenny.reminders.keys()) != remkeys: 
-      phenny.sending.acquire()
-      dumpReminders(phenny.tell_filename, phenny.reminders) # @@ tell
-      phenny.sending.release()
+   if len(caesar.reminders.keys()) != remkeys: 
+      caesar.sending.acquire()
+      dumpReminders(caesar.tell_filename, caesar.reminders) # @@ tell
+      caesar.sending.release()
 message.rule = r'(.*)'
 message.priority = 'low'
 

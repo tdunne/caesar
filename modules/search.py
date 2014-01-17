@@ -12,9 +12,9 @@ import web
 
 class Grab(web.urllib.URLopener):
    def __init__(self, *args):
-      self.version = 'Mozilla/5.0 (Phenny)'
+      self.version = 'Mozilla/5.0 (caesar)'
       web.urllib.URLopener.__init__(self, *args)
-      self.addheader('Referer', 'https://github.com/sbp/phenny')
+      self.addheader('Referer', 'https://github.com/sbp/caesar')
    def http_error_default(self, url, fp, errcode, errmsg, headers):
       return web.urllib.addinfourl(fp, [headers, errcode], "http:" + url)
 
@@ -56,32 +56,32 @@ def formatnumber(n):
 def old_gc(query):
    return formatnumber(google_count(query))
 
-def g(phenny, input): 
+def g(caesar, input): 
    """Queries Google for the specified input."""
    query = input.group(2)
    if not query: 
-      return phenny.reply('.g what?')
+      return caesar.reply('.g what?')
    query = query.encode('utf-8')
    uri = google_search(query)
    if uri: 
-      phenny.reply(uri)
-      if not hasattr(phenny.bot, 'last_seen_uri'):
-         phenny.bot.last_seen_uri = {}
-      phenny.bot.last_seen_uri[input.sender] = uri
-   elif uri is False: phenny.reply("Problem getting data from Google.")
-   else: phenny.reply("No results found for '%s'." % query)
+      caesar.reply(uri)
+      if not hasattr(caesar.bot, 'last_seen_uri'):
+         caesar.bot.last_seen_uri = {}
+      caesar.bot.last_seen_uri[input.sender] = uri
+   elif uri is False: caesar.reply("Problem getting data from Google.")
+   else: caesar.reply("No results found for '%s'." % query)
 g.commands = ['g']
 g.priority = 'high'
 g.example = '.g swhack'
 
-def oldgc(phenny, input): 
+def oldgc(caesar, input): 
    """Returns the number of Google results for the specified input."""
    query = input.group(2)
    if not query: 
-      return phenny.reply('.gc what?')
+      return caesar.reply('.gc what?')
    query = query.encode('utf-8')
    num = formatnumber(google_count(query))
-   phenny.say(query + ': ' + num)
+   caesar.say(query + ': ' + num)
 oldgc.commands = ['ogc', 'oldgc']
 oldgc.example = '.oldgc extrapolate'
 
@@ -89,12 +89,12 @@ r_query = re.compile(
    r'\+?"[^"\\]*(?:\\.[^"\\]*)*"|\[[^]\\]*(?:\\.[^]\\]*)*\]|\S+'
 )
 
-def gcs(phenny, input): 
+def gcs(caesar, input): 
    if not input.group(2):
-      return phenny.reply("Nothing to compare.")
+      return caesar.reply("Nothing to compare.")
    queries = r_query.findall(input.group(2))
    if len(queries) > 6: 
-      return phenny.reply('Sorry, can only compare up to six things.')
+      return caesar.reply('Sorry, can only compare up to six things.')
 
    results = []
    for i, query in enumerate(queries): 
@@ -107,7 +107,7 @@ def gcs(phenny, input):
 
    results = [(term, n) for (n, term) in reversed(sorted(results))]
    reply = ', '.join('%s (%s)' % (t, formatnumber(n)) for (t, n) in results)
-   phenny.say(reply)
+   caesar.say(reply)
 gcs.commands = ['gcs', 'comp']
 
 r_bing = re.compile(r'<h3><a href="([^"]+)"')
@@ -120,7 +120,7 @@ def bing_search(query, lang='en-GB'):
       if "r.msn.com/" in result: continue
       return result
 
-def bing(phenny, input): 
+def bing(caesar, input): 
    """Queries Bing for the specified input."""
    query = input.group(2)
    if query.startswith(':'): 
@@ -128,16 +128,16 @@ def bing(phenny, input):
       lang = lang[1:]
    else: lang = 'en-GB'
    if not query:
-      return phenny.reply('.bing what?')
+      return caesar.reply('.bing what?')
 
    query = query.encode('utf-8')
    uri = bing_search(query, lang)
    if uri: 
-      phenny.reply(uri)
-      if not hasattr(phenny.bot, 'last_seen_uri'):
-         phenny.bot.last_seen_uri = {}
-      phenny.bot.last_seen_uri[input.sender] = uri
-   else: phenny.reply("No results found for '%s'." % query)
+      caesar.reply(uri)
+      if not hasattr(caesar.bot, 'last_seen_uri'):
+         caesar.bot.last_seen_uri = {}
+      caesar.bot.last_seen_uri[input.sender] = uri
+   else: caesar.reply("No results found for '%s'." % query)
 bing.commands = ['bing']
 bing.example = '.bing swhack'
 
@@ -151,23 +151,23 @@ def duck_search(query):
    m = r_duck.search(bytes)
    if m: return web.decode(m.group(1))
 
-def duck(phenny, input): 
+def duck(caesar, input): 
    query = input.group(2)
-   if not query: return phenny.reply('.ddg what?')
+   if not query: return caesar.reply('.ddg what?')
 
    query = query.encode('utf-8')
    uri = duck_search(query)
    if uri: 
-      phenny.reply(uri)
-      if not hasattr(phenny.bot, 'last_seen_uri'):
-         phenny.bot.last_seen_uri = {}
-      phenny.bot.last_seen_uri[input.sender] = uri
-   else: phenny.reply("No results found for '%s'." % query)
+      caesar.reply(uri)
+      if not hasattr(caesar.bot, 'last_seen_uri'):
+         caesar.bot.last_seen_uri = {}
+      caesar.bot.last_seen_uri[input.sender] = uri
+   else: caesar.reply("No results found for '%s'." % query)
 duck.commands = ['duck', 'ddg']
 
-def search(phenny, input): 
+def search(caesar, input): 
    if not input.group(2): 
-      return phenny.reply('.search for what?')
+      return caesar.reply('.search for what?')
    query = input.group(2).encode('utf-8')
    gu = google_search(query) or '-'
    bu = bing_search(query) or '-'
@@ -187,18 +187,18 @@ def search(phenny, input):
       if len(du) > 150: du = '(extremely long link)'
       result = '%s (g), %s (b), %s (d)' % (gu, bu, du)
 
-   phenny.reply(result)
+   caesar.reply(result)
 search.commands = ['search']
 
-def suggest(phenny, input): 
+def suggest(caesar, input): 
    if not input.group(2):
-      return phenny.reply("No query term.")
+      return caesar.reply("No query term.")
    query = input.group(2).encode('utf-8')
    uri = 'http://websitedev.de/temp-bin/suggest.pl?q='
    answer = web.get(uri + web.urllib.quote(query).replace('+', '%2B'))
    if answer: 
-      phenny.say(answer)
-   else: phenny.reply('Sorry, no result.')
+      caesar.say(answer)
+   else: caesar.reply('Sorry, no result.')
 suggest.commands = ['suggest']
 
 def new_gc(query):
@@ -232,22 +232,22 @@ def newerest_gc(query):
       return result
    return None
 
-def ngc(phenny, input):
+def ngc(caesar, input):
    if not input.group(2):
-      return phenny.reply("No query term.")
+      return caesar.reply("No query term.")
    query = input.group(2).encode('utf-8')
    result = new_gc(query)
    if result:
-      phenny.say(query + ": " + result)
-   else: phenny.reply("Sorry, couldn't get a result.")
+      caesar.say(query + ": " + result)
+   else: caesar.reply("Sorry, couldn't get a result.")
 
 ngc.commands = ['ngc']
 ngc.priority = 'high'
 ngc.example = '.ngc extrapolate'
 
-def gc(phenny, input):
+def gc(caesar, input):
    if not input.group(2):
-      return phenny.reply("No query term.")
+      return caesar.reply("No query term.")
    query = input.group(2).encode('utf-8')
    result = query + ": "
    result += (old_gc(query) or "?") + " (api)"
@@ -255,7 +255,7 @@ def gc(phenny, input):
    result += ", " + (new_gc(query) or "?") + " (site)"
    if '"' in query:
       result += ", " + (newest_gc(query) or "?") + " (verbatim)"
-   phenny.say(result)
+   caesar.say(result)
 
 gc.commands = ['gc']
 gc.priority = 'high'

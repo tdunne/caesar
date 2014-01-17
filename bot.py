@@ -4,7 +4,7 @@ bot.py - Phenny IRC Bot
 Copyright 2008, Sean B. Palmer, inamidst.com
 Licensed under the Eiffel Forum License 2.
 
-http://inamidst.com/phenny/
+http://inamidst.com/phenny
 """
 
 import sys, os, re, threading, imp
@@ -20,7 +20,7 @@ def decode(bytes):
          text = bytes.decode('cp1252')
    return text
 
-class Phenny(irc.Bot): 
+class caesar(irc.Bot): 
    def __init__(self, config): 
       args = (config.nick, config.name, config.channels, config.password)
       irc.Bot.__init__(self, *args)
@@ -151,9 +151,9 @@ class Phenny(irc.Bot):
                bind(self, func.priority, regexp, func)
 
    def wrapped(self, origin, text, match): 
-      class PhennyWrapper(object): 
-         def __init__(self, phenny): 
-            self.bot = phenny
+      class caesarWrapper(object): 
+         def __init__(self, caesar): 
+            self.bot = caesar
 
          def __getattr__(self, attr): 
             sender = origin.sender or text
@@ -164,7 +164,7 @@ class Phenny(irc.Bot):
                return lambda msg: self.bot.msg(sender, msg)
             return getattr(self.bot, attr)
 
-      return PhennyWrapper(self)
+      return caesarWrapper(self)
 
    def input(self, origin, text, bytes, match, event, args): 
       class CommandInput(unicode): 
@@ -184,8 +184,8 @@ class Phenny(irc.Bot):
 
       return CommandInput(text, origin, bytes, match, event, args)
 
-   def call(self, func, origin, phenny, input): 
-      try: func(phenny, input)
+   def call(self, func, origin, caesar, input): 
+      try: func(caesar, input)
       except Exception, e: 
          self.error(origin)
 
@@ -211,14 +211,14 @@ class Phenny(irc.Bot):
                if match: 
                   if self.limit(origin, func): continue
 
-                  phenny = self.wrapped(origin, text, match)
+                  caesar = self.wrapped(origin, text, match)
                   input = self.input(origin, text, bytes, match, event, args)
 
                   if func.thread: 
-                     targs = (func, origin, phenny, input)
+                     targs = (func, origin, caesar, input)
                      t = threading.Thread(target=self.call, args=targs)
                      t.start()
-                  else: self.call(func, origin, phenny, input)
+                  else: self.call(func, origin, caesar, input)
 
                   for source in [origin.sender, origin.nick]: 
                      try: self.stats[(func.name, source)] += 1

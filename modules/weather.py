@@ -51,7 +51,7 @@ def local(icao, hour, minute):
       #         ':' + str(minute) + 'Z)')
    return str(hour) + ':' + str(minute) + 'Z'
 
-def code(phenny, search): 
+def code(caesar, search): 
    from icao import data
    
    if search.upper() in [loc[0] for loc in data]:

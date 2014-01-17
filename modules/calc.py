@@ -27,11 +27,11 @@ subs = [
    ('mbps', '(megabits / second)')
 ]
 
-def calc(phenny, input): 
+def calc(caesar, input): 
    """Use the Frink online calculator."""
    q = input.group(2)
    if not q: 
-      return phenny.say('0?')
+      return caesar.say('0?')
 
    query = q[:]
    for a, b in subs: 
@@ -61,16 +61,16 @@ def calc(phenny, input):
       elif ' in ' in q: 
          result += ' ' + q.split(' in ', 1)[1]
 
-      phenny.say(q + ' = ' + result[:350])
-   else: phenny.reply("Sorry, can't calculate that.")
-   phenny.say('Note that .calc is deprecated, consider using .c')
+      caesar.say(q + ' = ' + result[:350])
+   else: caesar.reply("Sorry, can't calculate that.")
+   caesar.say('Note that .calc is deprecated, consider using .c')
 calc.commands = ['calc']
 calc.example = '.calc 5 + 3'
 
-def c(phenny, input): 
+def c(caesar, input): 
    """Google calculator."""
    if not input.group(2):
-      return phenny.reply("Nothing to calculate.")
+      return caesar.reply("Nothing to calculate.")
    q = input.group(2).encode('utf-8')
    q = q.replace('\xcf\x95', 'phi') # utf-8 U+03D5
    q = q.replace('\xcf\x80', 'pi') # utf-8 U+03C0
@@ -86,29 +86,29 @@ def c(phenny, input):
       answer = answer.replace('<sup>', '^(')
       answer = answer.replace('</sup>', ')')
       answer = web.decode(answer)
-      phenny.say(answer)
-   else: phenny.say('Sorry, no result.')
+      caesar.say(answer)
+   else: caesar.say('Sorry, no result.')
 c.commands = ['c']
 c.example = '.c 5 + 3'
 
-def py(phenny, input): 
+def py(caesar, input): 
    query = input.group(2).encode('utf-8')
    uri = 'http://tumbolia.appspot.com/py/'
    answer = web.get(uri + web.urllib.quote(query))
    if answer: 
-      phenny.say(answer)
-   else: phenny.reply('Sorry, no result.')
+      caesar.say(answer)
+   else: caesar.reply('Sorry, no result.')
 py.commands = ['py']
 
-def wa(phenny, input): 
+def wa(caesar, input): 
    if not input.group(2):
-      return phenny.reply("No search term.")
+      return caesar.reply("No search term.")
    query = input.group(2).encode('utf-8')
    uri = 'http://tumbolia.appspot.com/wa/'
    answer = web.get(uri + web.urllib.quote(query.replace('+', '%2B')))
    if answer: 
-      phenny.say(answer)
-   else: phenny.reply('Sorry, no result.')
+      caesar.say(answer)
+   else: caesar.reply('Sorry, no result.')
 wa.commands = ['wa']
 
 if __name__ == '__main__': 

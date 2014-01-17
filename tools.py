@@ -8,8 +8,8 @@ http://inamidst.com/phenny/
 """
 
 def deprecated(old): 
-   def new(phenny, input, old=old): 
-      self = phenny
+   def new(caesar, input, old=old): 
+      self = caesar
       origin = type('Origin', (object,), {
          'sender': input.sender, 
          'nick': input.nick
