@@ -64,7 +64,7 @@ version.priority = 'low'
 def plugins(caesar, input):
     '''!plugins - Returns a list of plugins'''
 	if server == "mcserverhere":
-		caesar.say("Edit the default config first")    
+	    caesar.say("Edit the default config first")    
 	try:
             query = MinecraftQuery(server, port)
             status = query.get_rules()
