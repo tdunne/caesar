@@ -13,8 +13,8 @@ http://inamidst.com/phenny/
 import json
 import random
 import web
-def xkcd():
-'''get information from xkcd.com'''
+def xkcd(caesar, input):
+	'''get information from xkcd.com'''
 	try:
 		xkcd = web.get("https://xkcd.com/info.0.json")
 	except:
@@ -36,7 +36,7 @@ def xkcd():
 		caesar.say("https://xkcd.com/%s/" % comic)
 
 	if not comic: # If there is not a second piece of input, generate a random xkcd for the user
-	'''return a random xkcd'''
+		'''return a random xkcd'''
 		caesar.say("https://xkcd.com/%s/" % random.randint(0, num))
 
 xkcd.commands = ['xkcd']
