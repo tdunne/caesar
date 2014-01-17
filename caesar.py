@@ -63,7 +63,7 @@ def create_default_config(fn):
    # mcserver is the Minecraft server's address, mcport is its port (25565 by default)
    # mcstatus is disabled by default, see the exclude list above
    mcserver = "mcserverhere"
-   port = 25565
+   mcport = 25565
    
    # If you want to enumerate a list of modules rather than disabling
    # some, use "enable = ['example']", which takes precedent over exclude
