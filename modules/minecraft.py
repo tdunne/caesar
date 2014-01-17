@@ -20,8 +20,8 @@ port = caesar.config.mcport
 
 def mcstatus(caesar, input):
     '''.mcstatus - Get info of the Minecraft server'''
-	if server == "mcserverhere":
-		caesar.say("Edit the default config first")
+    if server == "mcserverhere":
+        caesar.say("Edit the default config first")
     try:
         query = MinecraftQuery(server, port)
         status = query.get_status()
@@ -38,11 +38,11 @@ def players(caesar, input):
 	if server == "mcserverhere":
 		caesar.say("Edit the default config first")    
 	try:
-        query = MinecraftQuery(server, port)
-        status = query.get_rules()
-        caesar.say("Players: [ %s ]" % ", ".join(status["players"]))
-    except:
-        caesar.say("Failed to query server - try again later")
+            query = MinecraftQuery(server, port)
+            status = query.get_rules()
+            caesar.say("Players: [ %s ]" % ", ".join(status["players"]))
+        except:
+            caesar.say("Failed to query server - try again later")
 
 players.commands = ["players"] # Syntax !players
 players.priority = 'low'
@@ -51,12 +51,12 @@ def version(caesar, input):
 	if server == "mcserverhere":
 		caesar.say("Edit the default config first")    
 	try:
-        query = MinecraftQuery(server, port)
-        status = query.get_rules()
-        caesar.say("Minecraft version: %s Bukkit version: %s" % (status["version"],
-																 str(status["software"])))
-    except:
-        caesar.say("Failed to query server - try again later")
+            query = MinecraftQuery(server, port)
+            status = query.get_rules()
+            caesar.say("Minecraft version: %s Bukkit version: %s" % (status["version"],
+                                                                 str(status["software"])))
+        except:
+            caesar.say("Failed to query server - try again later")
 
 version.commands = ["version"] # Syntax !version
 version.priority = 'low'
@@ -66,11 +66,11 @@ def plugins(caesar, input):
 	if server == "mcserverhere":
 		caesar.say("Edit the default config first")    
 	try:
-        query = MinecraftQuery(server, port)
-        status = query.get_rules()
-        caesar.say("Plugins: [ %s ]" % ", ".join(status["plugins"]))
-    except:
-        caesar.say("Failed to query server - try again later")
+            query = MinecraftQuery(server, port)
+            status = query.get_rules()
+            caesar.say("Plugins: [ %s ]" % ", ".join(status["plugins"]))
+       except:
+            caesar.say("Failed to query server - try again later")
 
 plugins.commands = ["plugins"] # Syntax !plugins
 plugins.priority = 'low'
