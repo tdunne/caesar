@@ -67,7 +67,7 @@ All functions below here are the work of Tim Dunne.
 Licensed under the Eiffel Forum License 2.
 '''
 def op(caesar, input):
-'''Op the specified user. Admin-only command'''
+	'''Op the specified user. Admin-only command'''
 	# Syntax !op nick #channel
 	nick = input.group(2)
 	channel = input.group(3)
@@ -83,7 +83,7 @@ op.priority = 'low'
 op.example = '!op nick #channel'	
 	
 def deop(caesar, input):
-'''Deop the specified user. Admin-only command'''
+	'''Deop the specified user. Admin-only command'''
 	# Syntax !deop nick #channel
 	nick = input.group(2)
 	channel = input.group(3)
@@ -99,7 +99,7 @@ deop.priority = 'low'
 deop.example = '!deop nick #channel'	
 
 def autovoice(caesar, input):
-'''Autovoices any nick which joins any channel caesar has op in. Disabled by default'''
+	'''Autovoices any nick which joins any channel caesar has op in. Disabled by default'''
 	if caesar.config.autovoice == False: return # If autovoice is disabled, go no further
 	nick = input.nick
 	channel = input.sender
@@ -108,7 +108,7 @@ autovoice.event = 'JOIN'
 autovoice.priority = 'low'
 
 def changenick(caesar, input):
-'''Changes the bot's nick. Owner-only command'''
+	'''Changes the bot's nick. Owner-only command'''
 	# Syntax !nick newnick
 	if input.owner:
 		nick = input.group(2)
@@ -117,7 +117,7 @@ changenick.commands = ['nick']
 changenick.example = '!nick newnick'
 
 def voice(caesar, input):
-'''Voice the specified nick. Admin-only command'''
+	'''Voice the specified nick. Admin-only command'''
 	# Syntax !voice nick #channel
 	nick = input.group(2)
 	channel = input.group(3)
