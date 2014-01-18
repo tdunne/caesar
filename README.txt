@@ -1,10 +1,13 @@
-Installation &c.
+Installation.
 
-1) Run ./phenny - this creates a default config file
-2) Edit ~/.phenny/default.py
-3) Run ./phenny - this now runs phenny with your settings
+1) Run ./caesar - this creates a default config file
+2) Edit ~/.caesar/default.py
+3) Run ./caesar - this now runs phenny with your settings
 
 Enjoy!
 
--- 
+caesar by Tim Dunne, forked from https://github.com/sbp/phenny/
+
+Phenny
+by
 Sean B. Palmer, http://inamidst.com/sbp/
