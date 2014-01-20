@@ -7,6 +7,8 @@ Installation.
 Enjoy!
 
 caesar by Tim Dunne, forked from https://github.com/sbp/phenny/
+Read the wiki for more information.
+
 
 Phenny
 by
