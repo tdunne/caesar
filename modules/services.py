@@ -47,11 +47,11 @@ hostservrequest.priority = 'medium'
 
 def cslogin(caesar, input):
 	'''log into a channel through ChanServ'''
-		channel = caesar.config.cschannel
-		password = caesar.config.chanservpass
-		if input.sender.startswith('#'): return # Must be done through privmsg and...
-		if input.owner: # ...by the owner
-			caesar.write(['PRIVMSG', 'CHANSERV', 'IDENTIFY', channel, password])
+	channel = caesar.config.cschannel
+	password = caesar.config.chanservpass
+	if input.sender.startswith('#'): return # Must be done through privmsg and...
+	if input.owner: # ...by the owner
+		caesar.write(['PRIVMSG', 'CHANSERV', 'IDENTIFY', channel, password])
 cslogin.commands = ['cslogin'] # Syntax !cslogin
 cslogin.priority = 'medium'
 
