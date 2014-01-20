@@ -29,11 +29,12 @@ def xkcd(caesar, input):
 	'''go to a specified xkcd'''
 	comic = input.group(2)
 	if comic: # If there is a second piece of input, the user is entering a specific xkcd to go to
+		comic = int(comic)
+		num = int(num)
 		if comic > num: # If the number input is greater than the latest xkcd comic's number, the comic does not exist
-			comic = int(comic)
-			num = int(num)
 			caesar.say("Invalid xkcd!") # therefore is invalid
-		caesar.say("https://xkcd.com/%s/" % comic)
+		else:	
+			caesar.say("https://xkcd.com/%s/" % comic)
 
 	if not comic: # If there is not a second piece of input, generate a random xkcd for the user
 		'''return a random xkcd'''
