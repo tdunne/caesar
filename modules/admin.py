@@ -99,6 +99,7 @@ def autovoice(caesar, input):
 	caesar.write(['MODE', channel, '+v', nick])
 autovoice.event = 'JOIN'
 autovoice.priority = 'low'
+autovoice.rule = r'.*'
 
 def changenick(caesar, input):
 	'''Changes the bot's nick. Owner-only command'''
