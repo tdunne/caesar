@@ -47,7 +47,7 @@ def version(caesar, input):
     try:
         query = MinecraftQuery(server, port)
         status = query.get_rules()
-        caesar.say("Minecraft version: %s Bukkit version: %s" % (status["version"],
+        caesar.say("Minecraft version: %s Software version: %s" % (status["version"],
                                                              str(status["software"])))
     except:
         caesar.say("Failed to query server - try again later")
