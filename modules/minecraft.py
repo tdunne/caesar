@@ -15,11 +15,11 @@ http://inamidst.com/phenny/
 import socket
 import struct
 
-port = 25565
+server = caesar.config.mcserver
+port = caesar.config.mcport
 
 def mcstatus(caesar, input):
     '''.mcstatus - Get info of the Minecraft server'''
-    server = input.group(2)
     try:
         query = MinecraftQuery(server, port)
         status = query.get_status()
@@ -33,7 +33,6 @@ mcstatus.commands = ["mcstatus"] # Syntax !mcstatus
 mcstatus.priority = 'low'
 
 def players(caesar, input):    
-    server = input.group(2)
     try:
         query = MinecraftQuery(server, port)
         status = query.get_rules()
@@ -45,7 +44,6 @@ players.commands = ["players"] # Syntax !players
 players.priority = 'low'
 
 def version(caesar, input):    
-    server = input.group(2)
     try:
         query = MinecraftQuery(server, port)
         status = query.get_rules()
@@ -59,7 +57,6 @@ version.priority = 'low'
 
 def plugins(caesar, input):
     '''!plugins - Returns a list of plugins'''   
-    server = input.group(2)
     try:
         query = MinecraftQuery(server, port)
         status = query.get_rules()
