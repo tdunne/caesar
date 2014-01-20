@@ -15,8 +15,8 @@ http://inamidst.com/phenny/
 import socket
 import struct
 
-server = caesar.config.mcserver
-port = caesar.config.mcport
+server = "serverhere"
+port = 25565
 
 def mcstatus(caesar, input):
     '''.mcstatus - Get info of the Minecraft server'''
