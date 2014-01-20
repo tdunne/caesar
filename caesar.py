@@ -53,13 +53,6 @@ def create_default_config(fn):
    cschannel = '#channel'
    chanservpass = 'password'
    
-   # Minecraft Status
-   # caesar can query a Minecraft server for several pieces of information (playerlist, plugins, version, status)
-   # mcserver is the Minecraft server's address, mcport is its port (25565 by default)
-   # mcstatus is disabled by default, see the exclude list above
-   mcserver = "mcserverhere" 
-   mcport = 25565
-   
    # If you want to enumerate a list of modules rather than disabling
    # some, use "enable = ['example']", which takes precedent over exclude
    # 
