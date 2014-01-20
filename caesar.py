@@ -36,6 +36,29 @@ def create_default_config(fn):
    admins = [owner, 'someoneyoutrust']
    # But admin.py, mcstatus.py and services.py are disabled by default, as follows:
    exclude = ['admin', 'mcstatus', 'services']
+
+   # Services
+   # Services are disabled by default, see the exclude list above
+   # Email address for registering the bot with, will be used for all nick registrations
+   email = 'emailhere'
+   # NickServ
+   # NickServ password for the bot to login with
+   nickservpass = 'password'
+   # HostServ
+   # This will request a vhost for your bot once it's nick is registered
+   vhost = 'vhost.you.want'
+   # ChanServ
+   # Logging in to channels
+   # cshannel is the channel you want to log in to, chanservpass is it's password
+   cschannel = '#channel'
+   chanservpass = 'password'
+   
+   # Minecraft Status
+   # caesar can query a Minecraft server for several pieces of information (playerlist, plugins, version, status)
+   # mcserver is the Minecraft server's address, mcport is its port (25565 by default)
+   # mcstatus is disabled by default, see the exclude list above
+   mcserver = "mcserverhere" 
+   mcport = 25565
    
    # If you want to enumerate a list of modules rather than disabling
    # some, use "enable = ['example']", which takes precedent over exclude
