@@ -70,12 +70,9 @@ def op(caesar, input):
 	'''Op the specified user. Admin-only command'''
 	# Syntax !op nick #channel
 	nick = input.group(2)
-	channel = input.group(3)
-	if not nick: # if no nick is entered, caesar will op the person who used the command...
+	channel = input.sender
+	if not nick: # if no nick is entered, caesar will op the person who used the command
 		nick = input.nick 
-	if not channel: # ...in the channel they sent it in
-		channel = input.sender
-	if nick.startswith('#'): return # This prevents !op #channel from working, there must be both a nick AND a channel or neither
 	if input.admin:
 		caesar.write(['MODE', channel, '+o', nick])
 op.commands = ['op']
@@ -86,12 +83,9 @@ def deop(caesar, input):
 	'''Deop the specified user. Admin-only command'''
 	# Syntax !deop nick #channel
 	nick = input.group(2)
-	channel = input.group(3)
+	channel = input.sender
 	if not nick: # if no nick is entered, caesar will deop the person who used the command...
 		nick = input.nick 
-	if not channel: # ...in the channel they sent it in
-		channel = input.sender
-	if nick.startswith('#'): return # This prevents !deop #channel from working, there must be both a nick AND a channel or neither
 	if input.admin:	
 		caesar.write(['MODE', channel, '-o', nick])
 deop.commands = ['deop']
