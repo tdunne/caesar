@@ -99,8 +99,7 @@ deop.priority = 'low'
 deop.example = '!deop nick #channel'	
 
 def autovoice(caesar, input):
-	'''Autovoices any nick which joins any channel caesar has op in. Disabled by default'''
-	if caesar.config.autovoice == False: return # If autovoice is disabled, go no further
+	'''Autovoices any nick which joins any channel caesar has op in.'''
 	nick = input.nick
 	channel = input.sender
 	caesar.write(['MODE', channel, '+v', nick])
@@ -120,17 +119,14 @@ def voice(caesar, input):
 	'''Voice the specified nick. Admin-only command'''
 	# Syntax !voice nick #channel
 	nick = input.group(2)
-	channel = input.group(3)
-	if not nick: # if no nick is entered, caesar will voice the person who used the command...
+	channel = input.sender
+	if not nick: # if no nick is entered, caesar will voice the person who used the command
 		nick = input.nick 
-	if not channel: # ...in the channel they sent it in
-		channel = input.sender
-	if nick.startswith('#'): return # This prevents !voice #channel from working, there must be both a nick AND a channel or neither
 	if input.admin:
 		caesar.write(['MODE', channel, '+v', nick])
 voice.commands = ['voice']
 voice.priority = 'low'
-voice.example = '!voice nick #channel'
+voice.example = '!voice nick'
 
 if __name__ == '__main__': 
    print __doc__.strip()
