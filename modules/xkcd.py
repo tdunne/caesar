@@ -23,7 +23,7 @@ def xkcd(caesar, input):
 	try:
 		info = json.loads(xkcd)
 	except:
-		aesar.reply("Failed to query xkcd, try again later")
+		caesar.reply("Failed to query xkcd, try again later")
 	num = info['num']
 
 	'''go to a specified xkcd'''
