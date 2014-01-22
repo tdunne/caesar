@@ -36,7 +36,10 @@ def players(caesar, input):
     try:
         query = MinecraftQuery(server, port)
         status = query.get_rules()
-        caesar.say("Players: %s " % ", ".join(status["players"]))
+        players = []
+        for player in status["players"]:
+            players.append(player[0] + "\x02\x02" + player[2:])
+        caesar.say("Players: %s " % ", ".join(players))
     except:
         caesar.say("Failed to query server - try again later")
 
