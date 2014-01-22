@@ -38,7 +38,7 @@ def players(caesar, input):
         status = query.get_rules()
         players = []
         for player in status["players"]:
-            players.append(player[0] + "\x02\x02" + player[2:])
+            players.append(player[0] + "\x02\x02" + player[1:])
         caesar.say("Players: %s " % ", ".join(players))
     except:
         caesar.say("Failed to query server - try again later")
