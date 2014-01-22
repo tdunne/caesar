@@ -95,7 +95,7 @@ deop.example = '!deop nick #channel'
 def autovoice(caesar, input):
 	'''Autovoices any nick which joins any channel caesar has op in.'''
 	nick = input.nick
-	channel = input.sender
+	channel = caesar.config.autovoicechan
 	caesar.write(['MODE', channel, '+v', nick])
 autovoice.event = 'JOIN'
 autovoice.priority = 'low'
