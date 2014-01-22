@@ -52,6 +52,10 @@ def create_default_config(fn):
    # cshannel is the channel you want to log in to, chanservpass is it's password
    cschannel = '#channel'
    chanservpass = 'password'
+   # Autovoicing
+   # caesar can autovoice any nick who joins the channel specified below
+   # bot must have op in the channel for this to work
+   autovoicechan = '#channel'
    
    # If you want to enumerate a list of modules rather than disabling
    # some, use "enable = ['example']", which takes precedent over exclude
